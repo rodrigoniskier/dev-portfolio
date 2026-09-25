@@ -17,13 +17,19 @@
       "PostgreSQL",
       "IA simulada na demo"
     ],
-    "screen": "examforgeai-bank.html",
+    "screen": "examforgeai-bank.webp",
     "screens": [
-      "examforgeai-bank.html",
-      "examforgeai-authoring.html",
-      "examforgeai-assessment.html"
+      "examforgeai-bank.webp",
+      "examforgeai-authoring.webp",
+      "examforgeai-assessment.webp"
     ],
-    "label": "Banco de questões"
+    "label": "Banco de questões",
+    "demo": "https://rn-examforge-demo.vercel.app",
+    "screenLabels": [
+      "Banco de questões",
+      "Elaboração assistida",
+      "Avaliação montada"
+    ]
   },
   {
     "id": "clinicaltrack",
@@ -43,12 +49,19 @@
       "PostgreSQL",
       "RBAC"
     ],
-    "screen": "clinicaltrack-dashboard.html",
+    "screen": "clinicaltrack-dashboard.webp",
     "screens": [
-      "clinicaltrack-dashboard.html",
-      "clinicaltrack-placements.html"
+      "clinicaltrack-dashboard.webp",
+      "clinicaltrack-placements.webp",
+      "clinicaltrack-evaluation.webp"
     ],
-    "label": "Acompanhamento da formação"
+    "label": "Acompanhamento da formação",
+    "demo": "https://rn-clinicaltrack-demo.vercel.app",
+    "screenLabels": [
+      "Visão do gestor",
+      "Placements",
+      "Avaliação formativa"
+    ]
   },
   {
     "id": "serviceflow",
@@ -68,12 +81,17 @@
       "OpenPyXL",
       "PostgreSQL"
     ],
-    "screen": "serviceflow-dashboard.html",
+    "screen": "serviceflow-dashboard.webp",
     "screens": [
-      "serviceflow-dashboard.html",
-      "serviceflow-form.html"
+      "serviceflow-dashboard.webp",
+      "serviceflow-form.webp"
     ],
-    "label": "Painel de atendimento"
+    "label": "Painel de atendimento",
+    "demo": "https://rn-serviceflow-demo.vercel.app",
+    "screenLabels": [
+      "Dashboard",
+      "Novo atendimento"
+    ]
   },
   {
     "id": "teammural",
@@ -93,11 +111,16 @@
       "PostgreSQL / SQLite",
       "JavaScript"
     ],
-    "screen": "teammural-general.html",
+    "screen": "teammural-general.webp",
     "screens": [
-      "teammural-general.html",
-      "teammural-direct.html"
+      "teammural-general.webp",
+      "teammural-direct.webp"
     ],
-    "label": "Canal geral da equipe"
+    "label": "Canal geral da equipe",
+    "demo": "https://rn-teammural-demo.vercel.app",
+    "screenLabels": [
+      "Canal geral",
+      "Conversa individual"
+    ]
   }
 ]
