@@ -1,12 +1,57 @@
-const projects=[{"id": "examforge", "name": "ExamForge AI", "repo": "ExamForgeAI", "tag": "Banco de questões e avaliações com apoio de IA", "desc": "Da criação de itens à montagem da prova, com revisão humana, organização por competência e exportação para LMS.", "problem": "Reduzir a fragmentação entre elaboração, revisão, aprovação e distribuição de avaliações.", "skills": ["Saída estruturada", "Human-in-the-loop", "Exportação LMS"], "stack": ["Django", "Python", "PostgreSQL", "IA simulada na demo"], "screen": "examforgeai-bank.webp", "screens": ["examforgeai-bank.webp", "examforgeai-authoring.webp", "examforgeai-assessment.webp"], "label": "Banco de questões", "demo": "https://rn-examforge-demo.vercel.app", "screenLabels": ["Banco de questões", "Elaboração assistida", "Avaliação montada"]}, {"id": "clinicaltrack", "name": "ClinicalTrack", "repo": "ClinicalTrack", "tag": "Gestão de estágios, práticas e formação supervisionada", "desc": "Trainees, supervisores, locais, períodos e avaliações em um fluxo único, com acesso definido pelo vínculo de supervisão.", "problem": "Dar visibilidade ao percurso de formação e aproximar avaliação, acompanhamento e próximos passos.", "skills": ["Controle de acesso", "Autorização por vínculo", "Avaliação formativa"], "stack": ["Django", "Python", "PostgreSQL", "RBAC"], "screen": "clinicaltrack-dashboard.webp", "screens": ["clinicaltrack-dashboard.webp", "clinicaltrack-placements.webp", "clinicaltrack-evaluation.webp"], "label": "Acompanhamento da formação", "demo": "https://rn-clinicaltrack-demo.vercel.app", "screenLabels": ["Visão do gestor", "Placements", "Avaliação formativa"]}, {"id": "serviceflow", "name": "ServiceFlow", "repo": "ServiceFlow", "tag": "Do atendimento operacional ao indicador gerencial", "desc": "Registros dispersos se tornam solicitações organizadas, com categorias, responsáveis, filtros e indicadores para apoiar a gestão.", "problem": "Transformar o histórico de atendimento em informação acessível para a operação e para a tomada de decisão.", "skills": ["Modelagem de processos", "Indicadores e filtros", "CSV e Excel"], "stack": ["Django", "Python", "OpenPyXL", "PostgreSQL"], "screen": "serviceflow-dashboard.webp", "screens": ["serviceflow-dashboard.webp", "serviceflow-form.webp"], "label": "Painel de atendimento", "demo": "https://rn-serviceflow-demo.vercel.app", "screenLabels": ["Dashboard", "Novo atendimento"]}, {"id": "teammural", "name": "TeamMural", "repo": "TeamMural", "tag": "Comunicação interna para pequenas equipes", "desc": "Um espaço próprio para os alinhamentos da equipe, com canal geral, conversas individuais e histórico organizado.", "problem": "Concentrar a comunicação de trabalho em um ambiente simples, com acesso por participação na conversa.", "skills": ["Autenticação", "Mensagens privadas", "Interface responsiva"], "stack": ["Flask", "Python", "PostgreSQL / SQLite", "JavaScript"], "screen": "teammural-general.webp", "screens": ["teammural-general.webp", "teammural-direct.webp"], "label": "Canal geral da equipe", "demo": "https://rn-teammural-demo.vercel.app", "screenLabels": ["Canal geral", "Conversa individual"]}];
-const gallery=document.getElementById('gallery'), picture=gallery.querySelector('img'), tabs=gallery.querySelector('.gallery-tabs');
-document.querySelectorAll('.open-gallery').forEach(button=>button.addEventListener('click',()=>{
-  const project=projects.find(p=>p.id===button.dataset.project);
-  document.getElementById('gallery-title').textContent=project.name;
-  tabs.replaceChildren();
-  function selectScreen(i){picture.src='screens/'+project.screens[i];picture.alt=project.name+' — '+project.screenLabels[i]+' — dados sintéticos';tabs.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));}
-  project.screens.forEach((screen,i)=>{const tab=document.createElement('button');tab.textContent=project.screenLabels[i];tab.onclick=()=>selectScreen(i);tabs.appendChild(tab);});
-  selectScreen(0);gallery.showModal();
-}));
-document.getElementById('gallery-close').onclick=()=>gallery.close();
-gallery.addEventListener('click',e=>{if(e.target===gallery)gallery.close()});
+const projects=[
+  {
+    id:"examforge",name:"ExamForge AI",
+    screens:["examforgeai-bank.webp","examforgeai-authoring.webp","examforgeai-assessment.webp"],
+    pt:["Banco de questões","Elaboração assistida","Avaliação montada"],
+    en:["Question bank","Assisted authoring","Assembled assessment"]
+  },
+  {
+    id:"clinicaltrack",name:"ClinicalTrack",
+    screens:["clinicaltrack-dashboard.webp","clinicaltrack-placements.webp","clinicaltrack-evaluation.webp"],
+    pt:["Visão do gestor","Placements","Avaliação formativa"],
+    en:["Manager view","Placements","Formative assessment"]
+  },
+  {
+    id:"serviceflow",name:"ServiceFlow",
+    screens:["serviceflow-dashboard.webp","serviceflow-form.webp"],
+    pt:["Dashboard","Novo atendimento"],
+    en:["Dashboard","New service request"]
+  },
+  {
+    id:"teammural",name:"TeamMural",
+    screens:["teammural-general.webp","teammural-direct.webp"],
+    pt:["Canal geral","Conversa individual"],
+    en:["General channel","Direct conversation"]
+  }
+];
+
+const gallery=document.getElementById("gallery");
+if(gallery){
+  const picture=gallery.querySelector("img");
+  const tabs=gallery.querySelector(".gallery-tabs");
+  const isEnglish=document.documentElement.lang.toLowerCase().startsWith("en");
+  document.querySelectorAll(".open-gallery").forEach(button=>button.addEventListener("click",()=>{
+    const project=projects.find(p=>p.id===button.dataset.project);
+    if(!project)return;
+    const labels=isEnglish?project.en:project.pt;
+    document.getElementById("gallery-title").textContent=project.name;
+    tabs.replaceChildren();
+    function selectScreen(i){
+      picture.src="screens/"+project.screens[i];
+      picture.alt=project.name+" — "+labels[i]+" — "+(isEnglish?"synthetic data":"dados sintéticos");
+      tabs.querySelectorAll("button").forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)));
+    }
+    project.screens.forEach((screen,i)=>{
+      const tab=document.createElement("button");
+      tab.type="button";
+      tab.textContent=labels[i];
+      tab.onclick=()=>selectScreen(i);
+      tabs.appendChild(tab);
+    });
+    selectScreen(0);
+    gallery.showModal();
+  }));
+  const close=document.getElementById("gallery-close");
+  if(close)close.onclick=()=>gallery.close();
+  gallery.addEventListener("click",e=>{if(e.target===gallery)gallery.close();});
+}
