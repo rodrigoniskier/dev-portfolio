@@ -1,25 +1,26 @@
-# Rodrigo Niskier — portfólio visual
+# Rodrigo Niskier — developer portfolio
 
-[**Abrir o portfólio**](https://rn-dev-portfolio-orcin.vercel.app)
+Public bilingual portfolio for software development, applied AI, automation, EdTech and HealthTech.
 
-Vitrine pública de aplicações web, IA aplicada e automação. HTML, CSS e JavaScript, sem backend, dependências de runtime ou serviços pagos de IA.
+- Portuguese: https://rn-dev-portfolio-orcin.vercel.app/
+- English: https://rn-dev-portfolio-orcin.vercel.app/en.html
 
-## Demonstrações
+## ATS / recruiter-friendly structure
 
-| Projeto | Demo | Código |
+The portfolio uses semantic HTML, standard headings, plain-text technical skills, education and professional background, static Portuguese and English pages, language-specific metadata, `hreflang`, JSON-LD Person markup and print-friendly CSS. Critical professional information is not stored only in images or generated dynamically by JavaScript.
+
+## Selected demos
+
+| Project | Demo | Code |
 | --- | --- | --- |
-| ExamForge AI | [Abrir](https://rn-examforge-demo.vercel.app) | [GitHub](https://github.com/rodrigoniskier/ExamForgeAI) |
-| ClinicalTrack | [Abrir](https://rn-clinicaltrack-demo.vercel.app) | [GitHub](https://github.com/rodrigoniskier/ClinicalTrack) |
-| ServiceFlow | [Abrir](https://rn-serviceflow-demo.vercel.app) | [GitHub](https://github.com/rodrigoniskier/ServiceFlow) |
-| TeamMural | [Abrir](https://rn-teammural-demo.vercel.app) | [GitHub](https://github.com/rodrigoniskier/TeamMural) |
+| ExamForge AI | https://rn-examforge-demo.vercel.app | https://github.com/rodrigoniskier/ExamForgeAI |
+| ClinicalTrack | https://rn-clinicaltrack-demo.vercel.app | https://github.com/rodrigoniskier/ClinicalTrack |
+| ServiceFlow | https://rn-serviceflow-demo.vercel.app | https://github.com/rodrigoniskier/ServiceFlow |
+| TeamMural | https://rn-teammural-demo.vercel.app | https://github.com/rodrigoniskier/TeamMural |
 
-Todos os dados das quatro demos são sintéticos. O ExamForge AI usa geração e revisão simuladas, sem chamadas a APIs de IA. O acesso é feito pelos botões das páginas iniciais, sem senha pública.
+All demo data is synthetic. ExamForge AI uses simulated AI generation/review in the public demo.
 
-## Capturas e interface
-
-Dez capturas reais das aplicações online, verificadas no navegador e convertidas para WebP. As galerias têm legendas, controles por teclado e textos alternativos. Layout adaptável, imagens com dimensões reservadas e carregamento tardio abaixo da dobra. Links diretos para seis projetos complementares, contato por e-mail, LinkedIn e GitHub.
-
-## Desenvolvimento
+## Development
 
 ```bash
 python -m http.server 8000
@@ -27,10 +28,6 @@ node --check script.js
 python verify.py
 ```
 
-Edite `index.html`, `style.css` e `script.js`; `projects.json` registra os dados dos cases. `screens/` contém somente imagens demonstrativas, sem tokens ou informações privadas.
+Primary files: `index.html` (Portuguese), `en.html` (English), `style.css`, `script.js`, `projects.json`, and `screens/`.
 
-## Publicação
-
-Repositório conectado à Vercel: alterações em `main` geram deploy automático e executam GitHub Actions. Metadados de compartilhamento, favicon e URL canônica configurados. Nenhuma variável secreta é necessária para o portfólio.
-
-As aplicações Python usam projetos Neon independentes no plano gratuito. A primeira abertura pode demorar alguns segundos após inatividade do banco.
+The repository is intended for static deployment and requires no runtime secrets.
