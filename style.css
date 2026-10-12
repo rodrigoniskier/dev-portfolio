@@ -50,3 +50,8 @@
   a{text-decoration:none}
   .primary{background:none!important;color:#000!important;padding:0}
 }
+
+/* Keep existing project cards readable on the narrowest phone viewports. */
+@media(max-width:360px){.other-grid{grid-template-columns:1fr}}
+/* Improve small-text contrast for the new case without restyling existing cases. */
+#orcaflow .case-number span,#orcaflow .screen-caption{color:var(--gray)}

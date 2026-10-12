@@ -1,5 +1,42 @@
 [
   {
+    "id": "orcaflow",
+    "name": "OrçaFlow — Rodrigo Niskier Lab",
+    "repo": null,
+    "tag": "Gestão de manutenção, do chamado ao próximo contato",
+    "desc": "Cliente, equipamento, solicitação, orçamento e acompanhamento em um tour público de oito etapas, com dados fictícios e estado temporário no navegador.",
+    "problem": "Dar continuidade a chamados e propostas dispersos, separando elaboração e acompanhamento comercial.",
+    "skills": [
+      "Precisão financeira",
+      "Transições de estado",
+      "Testes e CI/CD"
+    ],
+    "stack": [
+      "Python",
+      "Django 5.2",
+      "PostgreSQL 17",
+      "React",
+      "TypeScript",
+      "Vite",
+      "GitHub Actions"
+    ],
+    "screen": "orcaflow-landing.webp",
+    "screens": [
+      "orcaflow-landing.webp",
+      "orcaflow-budget.webp"
+    ],
+    "label": "Jornada de manutenção",
+    "demo": "https://orcaflow-demo.vercel.app/",
+    "screenLabels": [
+      "Apresentação da vitrine",
+      "Orçamento ORC-01 simulado"
+    ],
+    "screenLabelsEn": [
+      "Showcase overview",
+      "Simulated ORC-01 quote"
+    ]
+  },
+  {
     "id": "examforge",
     "name": "ExamForge AI",
     "repo": "ExamForgeAI",
