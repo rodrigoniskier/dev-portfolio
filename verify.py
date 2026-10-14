@@ -104,6 +104,29 @@ def verify():
             assert image["src"] == "screens/" + project["screen"], project["id"]
             assert image.get("alt") and int(image["width"]) > 0 and int(image["height"]) > 0, project["id"]
             assert image.get("loading") == "lazy", project["id"]
+        # The RAG showcase is a separate text-first spotlight, not a fictitious live demo.
+        assert "repolens" in page.ids, f"Missing RepoLens showcase in {filename}"
+        marker = '<section class="repolens-spotlight" id="repolens"'
+        assert source.count(marker) == 1, f"Missing/duplicate RepoLens showcase in {filename}"
+        assert source.index(marker) < source.index('<article class="case" id="orcaflow">'), filename
+        repolens = source.split(marker, 1)[1].split("</section>", 1)[0]
+        for required in (
+            "https://github.com/rodrigoniskier/repolens-ai",
+            "https://github.com/rodrigoniskier/repolens-ai/tree/v0.2.0",
+            "GEMINI_RAG_EVALUATION.md",
+            "HashingEmbedder",
+            "Gemini 3.5 Flash-Lite",
+            "86",
+        ):
+            assert required in repolens, f"RepoLens evidence missing in {filename}: {required}"
+        assert "repolens-demo" not in repolens.lower(), "No hosted RepoLens demo exists"
+        assert 'aria-labelledby="repolens-title"' in repolens, filename
+        assert 'id="repolens-title"' in repolens, filename
+        spotlight_links = re.findall(r'<a\s[^>]*href="([^"]+)"[^>]*>', repolens)
+        assert len(spotlight_links) == 3, f"Expected three evidence links in {filename}"
+        for link in spotlight_links:
+            assert link.startswith("https://github.com/rodrigoniskier/repolens-ai"), link
+
         orcaflow = page.cases[0]
         assert len(orcaflow["links"]) == 1, "OrçaFlow must link only to its public demo"
         link = orcaflow["links"][0]
@@ -119,7 +142,7 @@ def verify():
         assert "<iframe" not in source and "em preparação" not in source, filename
         assert 'mailto:niskier.rodrigo@gmail.com' in source, filename
         assert 'og:image' in source and 'rel="canonical"' in source, filename
-    print("Five bilingual cases, gallery data, twelve WebP screenshots (<200 KB each), metadata, contact and internal links verified.")
+    print("Five bilingual gallery cases plus RepoLens AI spotlight, twelve WebP screenshots, metadata, contact and links verified.")
 
 
 if __name__ == "__main__":

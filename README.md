@@ -9,6 +9,14 @@ Public bilingual portfolio for software development, applied AI, automation, EdT
 
 The portfolio uses semantic HTML, standard headings, plain-text technical skills, education and professional background, static Portuguese and English pages, language-specific metadata, `hreflang`, JSON-LD Person markup and print-friendly CSS. Critical professional information is not stored only in images or generated dynamically by JavaScript.
 
+## RepoLens AI — featured personal project (v0.2.0)
+
+The bilingual homepages feature **RepoLens AI** as a dedicated text-first spotlight above the existing five gallery cases. No screenshot or online demo is claimed. The public, versioned [repository](https://github.com/rodrigoniskier/repolens-ai), [v0.2.0 source](https://github.com/rodrigoniskier/repolens-ai/tree/v0.2.0) and [generative RAG evaluation report](https://github.com/rodrigoniskier/repolens-ai/blob/v0.2.0/docs/reports/GEMINI_RAG_EVALUATION.md) provide inspectable evidence.
+
+RepoLens AI combines Python/FastAPI, source-code ingestion, chunking, ChromaDB retrieval and Gemini-powered answer generation with references. The published v0.2.0 has 86 passing automated tests, two tagged versions, and eight successful Gemini API calls (one smoke test plus seven evaluation calls). The **live generative evaluation used a lexical HashingEmbedder**, not semantic embeddings; citation validity and lexical claim support are not semantic-accuracy claims.
+
+The static spotlight is accessible in Portuguese and English and requires no external resources or browser JavaScript. The original five screenshot-based projects and their gallery remain unchanged. `verify.py` asserts the evidence links, bilingual wording and separation from hosted demos.
+
 ## Selected demos
 
 | Project | Demo | Code |

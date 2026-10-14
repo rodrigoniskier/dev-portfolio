@@ -31,6 +31,19 @@ class PortfolioContractTests(unittest.TestCase):
     def test_real_five_case_fixture_passes(self):
         verify.verify()
 
+
+    def test_missing_repolens_spotlight_is_rejected(self):
+        self.edit("en.html", lambda s: re.sub(
+            r'<section class="repolens-spotlight".*?</section>', "", s, flags=re.S
+        ))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
+    def test_missing_repolens_evaluation_link_is_rejected(self):
+        self.edit("index.html", lambda s: s.replace("GEMINI_RAG_EVALUATION.md", "missing-report.md"))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
     def test_gallery_manifest_mismatch_is_rejected(self):
         self.edit("script.js", lambda s: s.replace("orcaflow-budget.webp", "missing-screen.webp"))
         with self.assertRaises(AssertionError):
