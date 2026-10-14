@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Rodrigo Niskier | Desenvolvedor Python · IA · EdTech · HealthTech</title>
-  <meta name="description" content="Desenvolvedor Python focado em aplicações web, IA aplicada, automação, EdTech e HealthTech. Portfólio com projetos em Django, Flask, JavaScript, React, PostgreSQL, APIs e geração de documentos.">
-  <meta name="keywords" content="Python, Django, Flask, JavaScript, React, TypeScript, PostgreSQL, APIs, AI, Generative AI, Automation, EdTech, HealthTech, GitHub, Vercel, OpenPyXL, Google Apps Script">
+  <meta name="description" content="Portfólio de desenvolvimento Python, FastAPI, RAG e IA generativa com Gemini API, ChromaDB, LLMOps, Docker, CI/CD e aplicações EdTech e HealthTech.">
+  <meta name="keywords" content="Python, FastAPI, Django, Flask, RAG, LLMOps, Gemini API, embeddings, ChromaDB, Pytest, Docker, GitHub Actions, JavaScript, React, TypeScript, PostgreSQL, APIs, Generative AI, Automation, EdTech, HealthTech">
   <meta name="author" content="Rodrigo Niskier">
   <meta property="og:title" content="Rodrigo Niskier | Desenvolvedor Python e produtos digitais">
   <meta property="og:description" content="Aplicações web, IA e automação para problemas reais de educação, saúde e trabalho.">
@@ -39,7 +39,7 @@
     ],
     "knowsAbout":[
       "Python","Django","Flask","JavaScript","React","TypeScript","PostgreSQL",
-      "REST APIs","Generative AI","Automation","EdTech","HealthTech","OpenPyXL",
+      "REST APIs","Generative AI","RAG","LLMOps","ChromaDB","Gemini API","FastAPI","Docker","GitHub Actions","Automation","EdTech","HealthTech","OpenPyXL",
       "Google Apps Script","Git","GitHub","Vercel","PythonAnywhere","Railway"
     ]
   }
@@ -105,7 +105,37 @@
         </div>
         <p>Produtos com backend, banco de dados, interfaces responsivas, automação e integração com IA.</p>
       </div>
-      <p class="preview-notice">Explore as demonstrações online com dados fictícios. No ExamForge AI, a geração e a revisão de questões são simuladas, com decisão humana.</p>
+      <p class="preview-notice">Demonstrações disponíveis usam dados fictícios. O RepoLens AI possui código e avaliação públicos, sem demo hospedada; no ExamForge AI, a geração e a revisão são simuladas.</p>
+      <section class="repolens-spotlight" id="repolens" aria-labelledby="repolens-title">
+        <div class="repolens-copy">
+          <div class="repolens-topline"><span>PROJETO PESSOAL · GENERATIVE AI / LLMOPS</span><span>v0.2.0 · 2026</span></div>
+          <h3 id="repolens-title">RepoLens <em>AI.</em></h3>
+          <p class="repolens-subtitle">Pergunte ao código. Receba respostas com fontes.</p>
+          <p>Plataforma experimental que indexa repositórios de software e combina recuperação de trechos, ChromaDB e Gemini API para responder perguntas sobre o código com citações rastreáveis.</p>
+          <div class="repolens-numbers" aria-label="Resultados do projeto">
+            <div><strong>86</strong><span>testes aprovados</span></div>
+            <div><strong>2</strong><span>versões entregues</span></div>
+            <div><strong>8</strong><span>chamadas Gemini bem-sucedidas</span></div>
+          </div>
+          <div class="case-actions">
+            <a class="primary" href="https://github.com/rodrigoniskier/repolens-ai" target="_blank" rel="noopener noreferrer">Explorar código no GitHub ↗</a>
+            <a class="text-link" href="https://github.com/rodrigoniskier/repolens-ai/tree/v0.2.0" target="_blank" rel="noopener noreferrer">Versão v0.2.0 ↗</a>
+            <a class="text-link" href="https://github.com/rodrigoniskier/repolens-ai/blob/v0.2.0/docs/reports/GEMINI_RAG_EVALUATION.md" target="_blank" rel="noopener noreferrer">Relatório RAG ↗</a>
+          </div>
+        </div>
+        <div class="repolens-technical">
+          <p class="repolens-diagram-title">PIPELINE DE INTELIGÊNCIA DE REPOSITÓRIOS</p>
+          <ol class="repolens-flow">
+            <li><span>01</span><div><strong>Repositório Git</strong><small>Ingestão, leitura e fragmentação de código</small></div></li>
+            <li><span>02</span><div><strong>Embeddings + ChromaDB</strong><small>Indexação e recuperação de evidências</small></div></li>
+            <li><span>03</span><div><strong>Gemini API</strong><small>Geração real de respostas fundamentadas</small></div></li>
+            <li><span>04</span><div><strong>LLMOps e avaliação</strong><small>Citações, replay, tokens, latência e testes</small></div></li>
+          </ol>
+          <div class="repolens-tags"><span>Python</span><span>FastAPI</span><span>RAG</span><span>ChromaDB</span><span>Gemini API</span><span>Pytest</span><span>Docker</span><span>GitHub Actions</span></div>
+          <p class="repolens-disclaimer">Avaliação live inicial com <strong>Gemini 3.5 Flash-Lite</strong> e <strong>HashingEmbedder lexical</strong> (não embeddings semânticos). Métricas reproduzíveis, sem alegação de precisão semântica. Projeto pessoal com código público; não há demonstração hospedada.</p>
+        </div>
+      </section>
+
 
       <article class="case" id="orcaflow">
         <div class="case-number">01 <span>PRODUTO DIGITAL</span></div>
@@ -240,11 +270,11 @@
         <article class="profile-card">
           <h3>Competências técnicas</h3>
           <ul class="keyword-list">
-            <li><strong>Backend:</strong> Python, Django, Flask, REST APIs, PostgreSQL, SQLite</li>
+            <li><strong>Backend:</strong> Python, FastAPI, Django, Flask, REST APIs, PostgreSQL, SQLite</li>
             <li><strong>Frontend:</strong> HTML, CSS, JavaScript, React, TypeScript</li>
-            <li><strong>IA e automação:</strong> Generative AI, LLM workflows, Human-in-the-loop, Google Apps Script, Power Automate</li>
+            <li><strong>IA e automação:</strong> Generative AI, RAG, LLMOps, Gemini API, embeddings, ChromaDB, avaliação de LLMs, Human-in-the-loop, Google Apps Script, Power Automate</li>
             <li><strong>Dados e documentos:</strong> OpenPyXL, PDF/DOCX generation, CSV, dashboards</li>
-            <li><strong>DevOps / Cloud:</strong> Git, GitHub, CI/CD, Vercel, PythonAnywhere, Railway</li>
+            <li><strong>DevOps / Cloud:</strong> Git, GitHub, GitHub Actions, Docker, CI/CD, GitHub Codespaces, Vercel, PythonAnywhere, Railway</li>
             <li><strong>Domínios:</strong> EdTech, HealthTech, assessment systems, internal tools, academic workflows</li>
           </ul>
         </article>
