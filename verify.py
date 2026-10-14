@@ -122,7 +122,9 @@ def verify():
         assert "repolens-demo" not in repolens.lower(), "No hosted RepoLens demo exists"
         assert 'aria-labelledby="repolens-title"' in repolens, filename
         assert 'id="repolens-title"' in repolens, filename
-        for link in re.findall(r'<a\\s[^>]*href="([^"]+)"[^>]*>', repolens):
+        spotlight_links = re.findall(r'<a\s[^>]*href="([^"]+)"[^>]*>', repolens)
+        assert len(spotlight_links) == 3, f"Expected three evidence links in {filename}"
+        for link in spotlight_links:
             assert link.startswith("https://github.com/rodrigoniskier/repolens-ai"), link
 
         orcaflow = page.cases[0]
