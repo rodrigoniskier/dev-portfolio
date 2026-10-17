@@ -118,7 +118,7 @@ def verify():
             "SHA-256",
         ):
             assert evidence in aula, f"AulaPulse evidence missing in {filename}: {evidence}"
-        aula_links = re.findall(r'<a\\s[^>]*href="([^"]+)"[^>]*>', aula)
+        aula_links = re.findall(r'<a\s[^>]*href="([^"]+)"[^>]*>', aula)
         assert aula_links == ["https://aulapulse-google-workspace.vercel.app/"], filename
         assert "github.com/rodrigoniskier/aulapulse-google-workspace" not in aula, "Private source must not be linked publicly"
         # The RAG showcase is a separate text-first spotlight, not a fictitious live demo.
