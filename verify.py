@@ -104,6 +104,25 @@ def verify():
             assert image["src"] == "screens/" + project["screen"], project["id"]
             assert image.get("alt") and int(image["width"]) > 0 and int(image["height"]) > 0, project["id"]
             assert image.get("loading") == "lazy", project["id"]
+        # AulaPulse is a live, separate spotlight; the GitHub source repo is private.
+        assert "aulapulse" in page.ids, f"Missing AulaPulse showcase in {filename}"
+        aula_marker = '<section class="repolens-spotlight aulapulse-spotlight" id="aulapulse"'
+        assert source.count(aula_marker) == 1, filename
+        repolens_marker = '<section class="repolens-spotlight" id="repolens"'
+        assert repolens_marker in source, f"Missing RepoLens showcase in {filename}"
+        assert source.index(aula_marker) < source.index(repolens_marker), filename
+        aula = source.split(aula_marker, 1)[1].split("</section>", 1)[0]
+        assert 'aria-labelledby="aulapulse-title"' in aula and 'id="aulapulse-title"' in aula, filename
+        for evidence in (
+            "https://aulapulse-google-workspace.vercel.app/",
+            "Google Forms", "Google Sheets", "Google Apps Script",
+            "Node.js", "TypeScript", "Gemini API", "Vercel Functions", "22",
+            "SHA-256",
+        ):
+            assert evidence in aula, f"AulaPulse evidence missing in {filename}: {evidence}"
+        aula_links = re.findall(r'<a\s[^>]*href="([^"]+)"[^>]*>', aula)
+        assert aula_links == ["https://aulapulse-google-workspace.vercel.app/"], filename
+        assert "github.com/rodrigoniskier/aulapulse-google-workspace" not in aula, "Private source must not be linked publicly"
         # The RAG showcase is a separate text-first spotlight, not a fictitious live demo.
         assert "repolens" in page.ids, f"Missing RepoLens showcase in {filename}"
         marker = '<section class="repolens-spotlight" id="repolens"'
@@ -142,7 +161,7 @@ def verify():
         assert "<iframe" not in source and "em preparação" not in source, filename
         assert 'mailto:niskier.rodrigo@gmail.com' in source, filename
         assert 'og:image' in source and 'rel="canonical"' in source, filename
-    print("Five bilingual gallery cases plus RepoLens AI spotlight, twelve WebP screenshots, metadata, contact and links verified.")
+    print("Five bilingual gallery cases plus AulaPulse AI and RepoLens AI spotlights, twelve WebP screenshots, metadata, contact and links verified.")
 
 
 if __name__ == "__main__":

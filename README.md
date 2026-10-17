@@ -9,9 +9,22 @@ Public bilingual portfolio for software development, applied AI, automation, EdT
 
 The portfolio uses semantic HTML, standard headings, plain-text technical skills, education and professional background, static Portuguese and English pages, language-specific metadata, `hreflang`, JSON-LD Person markup and print-friendly CSS. Critical professional information is not stored only in images or generated dynamically by JavaScript.
 
+## AulaPulse AI — live Google Workspace + Gemini integration (2026)
+
+The bilingual homepages now feature **AulaPulse AI** as the first text-first spotlight, followed by RepoLens AI and the five existing screenshot-based gallery projects.
+
+- **Live application:** https://aulapulse-google-workspace.vercel.app/ (public browser access verified by the project owner).
+- **Problem:** academic feedback is frequently collected but not consolidated into actionable module-level indicators.
+- **Event-driven integration:** Google Forms → Google Sheets → Google Apps Script (installable submission triggers, validation, SHA-256 deterministic deduplication and idempotent consolidation).
+- **Full stack:** Node.js/TypeScript REST API with Vercel Functions, a responsive dashboard and a server-side Gemini API call for pedagogical synthesis. Demo mode uses synthetic data; live mode reads authenticated Apps Script data through the server.
+- **Validation:** the owner manually verified an incognito browser visit, one fictional form submission reflected in the dashboard and a successful Gemini synthesis using the production API key. Separately, CI passes on Node.js 22/24 with 22 automated tests and a dependency audit reporting zero vulnerabilities.
+- **Portfolio positioning:** independently developed personal MVP; not a client contract. The source repository remains **private**; no public code link is advertised. The private Google Sheets and API credentials are never embedded in the portfolio.
+
+**New technologies emphasized relative to other featured projects:** Google Forms, Google Sheets, Apps Script triggers, cross-service event-driven automation and server-side Vercel Functions. React/TypeScript, GitHub Actions and Gemini API already appeared in OrçaFlow or RepoLens AI; AulaPulse demonstrates their integration with a working Google Workspace data pipeline.
+
 ## RepoLens AI — featured personal project (v0.2.0)
 
-The bilingual homepages feature **RepoLens AI** as a dedicated text-first spotlight above the existing five gallery cases. No screenshot or online demo is claimed. The public, versioned [repository](https://github.com/rodrigoniskier/repolens-ai), [v0.2.0 source](https://github.com/rodrigoniskier/repolens-ai/tree/v0.2.0) and [generative RAG evaluation report](https://github.com/rodrigoniskier/repolens-ai/blob/v0.2.0/docs/reports/GEMINI_RAG_EVALUATION.md) provide inspectable evidence.
+The bilingual homepages feature **RepoLens AI** as a dedicated text-first spotlight after AulaPulse AI and above the existing five gallery cases. No screenshot or online demo is claimed. The public, versioned [repository](https://github.com/rodrigoniskier/repolens-ai), [v0.2.0 source](https://github.com/rodrigoniskier/repolens-ai/tree/v0.2.0) and [generative RAG evaluation report](https://github.com/rodrigoniskier/repolens-ai/blob/v0.2.0/docs/reports/GEMINI_RAG_EVALUATION.md) provide inspectable evidence.
 
 RepoLens AI combines Python/FastAPI, source-code ingestion, chunking, ChromaDB retrieval and Gemini-powered answer generation with references. The published v0.2.0 has 86 passing automated tests, two tagged versions, and eight successful Gemini API calls (one smoke test plus seven evaluation calls). The **live generative evaluation used a lexical HashingEmbedder**, not semantic embeddings; citation validity and lexical claim support are not semantic-accuracy claims.
 

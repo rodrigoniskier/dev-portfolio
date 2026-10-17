@@ -32,6 +32,18 @@ class PortfolioContractTests(unittest.TestCase):
         verify.verify()
 
 
+    def test_missing_aulapulse_spotlight_is_rejected(self):
+        self.edit("index.html", lambda s: re.sub(
+            r'<section class="repolens-spotlight aulapulse-spotlight".*?</section>', "", s, flags=re.S
+        ))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
+    def test_wrong_aulapulse_live_url_is_rejected(self):
+        self.edit("en.html", lambda s: s.replace("https://aulapulse-google-workspace.vercel.app/", "https://example.invalid/"))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
     def test_missing_repolens_spotlight_is_rejected(self):
         self.edit("en.html", lambda s: re.sub(
             r'<section class="repolens-spotlight".*?</section>', "", s, flags=re.S
