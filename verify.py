@@ -108,7 +108,9 @@ def verify():
         assert "aulapulse" in page.ids, f"Missing AulaPulse showcase in {filename}"
         aula_marker = '<section class="repolens-spotlight aulapulse-spotlight" id="aulapulse"'
         assert source.count(aula_marker) == 1, filename
-        assert source.index(aula_marker) < source.index('<section class="repolens-spotlight" id="repolens"'), filename
+        repolens_marker = '<section class="repolens-spotlight" id="repolens"'
+        assert repolens_marker in source, f"Missing RepoLens showcase in {filename}"
+        assert source.index(aula_marker) < source.index(repolens_marker), filename
         aula = source.split(aula_marker, 1)[1].split("</section>", 1)[0]
         assert 'aria-labelledby="aulapulse-title"' in aula and 'id="aulapulse-title"' in aula, filename
         for evidence in (
