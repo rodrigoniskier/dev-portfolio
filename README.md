@@ -9,9 +9,23 @@ Public bilingual portfolio for software development, applied AI, automation, EdT
 
 The portfolio uses semantic HTML, standard headings, plain-text technical skills, education and professional background, static Portuguese and English pages, language-specific metadata, `hreflang`, JSON-LD Person markup and print-friendly CSS. Critical professional information is not stored only in images or generated dynamically by JavaScript.
 
+## Escalas de Estágio – Medicina — Google Workspace workflow (2026)
+
+A new Portuguese/English text-first showcase precedes AulaPulse AI and RepoLens AI. This is a real medical internship scheduling workflow developed with **Google Sheets, Google Drive and Google Apps Script**, backed by a private spreadsheet and published as a web app.
+
+- **Problem:** students and coordination staff need a single structured workflow for medical rotation scheduling instead of disparate manual records.
+- **Verified inventory:** eight schedules; 1,532 schedule slots imported and checked; four application screens installed; four spreadsheet tabs protected.
+- **Architecture:** Google Sheets stores the scheduling matrix in Drive; Google Apps Script exposes a browser-based flow connected to the sheet for schedule reading and input. The application includes student entry fields and a coordination dashboard.
+- **Observed checks on 19 Oct 2026:** published app loaded all eight schedules; student fields displayed and empty submissions were blocked. The sheet's Fortaleza time zone and protected tabs were configured.
+- **Open acceptance point:** initial administrator password setup and the full admin authentication flow had **not yet been confirmed**. Do not describe this as independently security-audited or fully validated.
+- **Privacy:** no spreadsheet identifier, web app deployment URL, student names, credentials, real-data screenshots or internal configuration values are committed or linked from this portfolio. App availability by link does not justify amplifying personal data via an indexed portfolio.
+- **Positioning:** applied academic workflow project. No claim of commercial contract, public-source repository, artificial intelligence, automated QA suite or measured productivity gains.
+
+The case demonstrates low-friction process digitization, native Google Workspace integration, application publishing, input validation, spreadsheet tab protection and clear separation of public project documentation from operational academic records. It is independent of the separate ClinicalTrack simulation.
+
 ## AulaPulse AI — live Google Workspace + Gemini integration (2026)
 
-The bilingual homepages now feature **AulaPulse AI** as the first text-first spotlight, followed by RepoLens AI and the five existing screenshot-based gallery projects.
+The bilingual homepages feature **AulaPulse AI** after Escalas de Estágio – Medicina, followed by RepoLens AI and the five existing screenshot-based gallery projects.
 
 - **Live application:** https://aulapulse-google-workspace.vercel.app/ (public browser access verified by the project owner).
 - **Problem:** academic feedback is frequently collected but not consolidated into actionable module-level indicators.
