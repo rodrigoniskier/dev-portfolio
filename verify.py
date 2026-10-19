@@ -111,6 +111,18 @@ def verify():
         repolens_marker = '<section class="repolens-spotlight" id="repolens"'
         assert repolens_marker in source, f"Missing RepoLens showcase in {filename}"
         assert source.index(aula_marker) < source.index(repolens_marker), filename
+        # Internship scheduling is a privacy-conscious, independently verified text-first case.
+        escalas_marker = '<section class="repolens-spotlight escalas-spotlight" id="escalas-medicina"'
+        assert source.count(escalas_marker) == 1, filename
+        assert source.index(escalas_marker) < source.index(aula_marker), filename
+        escalas = source.split(escalas_marker, 1)[1].split("</section>", 1)[0]
+        assert 'aria-labelledby="escalas-medicina-title"' in escalas, filename
+        assert 'id="escalas-medicina-title"' in escalas, filename
+        for evidence in ("Google Sheets", "Google Apps Script", "Google Drive", "1.532" if language == "pt" else "1,532"):
+            assert evidence in escalas, f"Escalas evidence missing in {filename}: {evidence}"
+        for pending in (("pendentes", "senha") if language == "pt" else ("pending", "password")):
+            assert pending in escalas, f"Admin setup disclaimer missing in {filename}: {pending}"
+        assert not re.findall(r'<a\s[^>]*href="([^"]+)"[^>]*>', escalas), "No public link to academic personal data"
         aula = source.split(aula_marker, 1)[1].split("</section>", 1)[0]
         assert 'aria-labelledby="aulapulse-title"' in aula and 'id="aulapulse-title"' in aula, filename
         for evidence in (
@@ -161,7 +173,7 @@ def verify():
         assert "<iframe" not in source and "em preparação" not in source, filename
         assert 'mailto:niskier.rodrigo@gmail.com' in source, filename
         assert 'og:image' in source and 'rel="canonical"' in source, filename
-    print("Five bilingual gallery cases plus AulaPulse AI and RepoLens AI spotlights, twelve WebP screenshots, metadata, contact and links verified.")
+    print("Five bilingual gallery cases plus Escalas, AulaPulse AI and RepoLens AI spotlights, twelve WebP screenshots, metadata, contact and links verified.")
 
 
 if __name__ == "__main__":

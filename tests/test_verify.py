@@ -32,6 +32,29 @@ class PortfolioContractTests(unittest.TestCase):
         verify.verify()
 
 
+    def test_missing_escalas_spotlight_is_rejected(self):
+        self.edit("index.html", lambda s: re.sub(
+            r'<section class="repolens-spotlight escalas-spotlight".*?</section>', "", s, flags=re.S
+        ))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
+    def test_escalas_missing_pending_admin_disclaimer_is_rejected(self):
+        self.edit("en.html", lambda s: s.replace("were still pending", "are ready for all users"))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
+    def test_escalas_public_app_link_is_rejected(self):
+        self.edit("index.html", lambda s: s.replace(
+            '<section class="repolens-spotlight escalas-spotlight" id="escalas-medicina"',
+            '<section class="repolens-spotlight escalas-spotlight" id="escalas-medicina"'
+        ).replace(
+            '<h3 id="escalas-medicina-title">',
+            '<a href="https://script.google.com/s/mock">Open app</a><h3 id="escalas-medicina-title">'
+        ))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
     def test_missing_aulapulse_spotlight_is_rejected(self):
         self.edit("index.html", lambda s: re.sub(
             r'<section class="repolens-spotlight aulapulse-spotlight".*?</section>', "", s, flags=re.S
