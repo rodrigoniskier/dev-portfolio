@@ -45,7 +45,7 @@ class PortfolioContractTests(unittest.TestCase):
             verify.verify()
 
     def test_escalas_incorrect_password_status_is_rejected(self):
-        self.edit("index.html", lambda s: s.replace("senha inicial do administrador cadastrada pelo responsável", "senha do administrador em configuração"))
+        self.edit("index.html", lambda s: s.replace("cadastrada", "não configurada"))
         with self.assertRaises(AssertionError):
             verify.verify()
 
