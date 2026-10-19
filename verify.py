@@ -120,8 +120,8 @@ def verify():
         assert 'id="escalas-medicina-title"' in escalas, filename
         for evidence in ("Google Sheets", "Google Apps Script", "Google Drive", "1.532" if language == "pt" else "1,532"):
             assert evidence in escalas, f"Escalas evidence missing in {filename}: {evidence}"
-        for pending in (("pendentes", "senha") if language == "pt" else ("pending", "password")):
-            assert pending in escalas, f"Admin setup disclaimer missing in {filename}: {pending}"
+        for admin_status in (("senha inicial", "cadastrada", "ainda não foram confirmados") if language == "pt" else ("password", "registered", "not yet been confirmed")):
+            assert admin_status in escalas, f"Accurate admin status disclosure missing in {filename}: {admin_status}"
         assert not re.findall(r'<a\s[^>]*href="([^"]+)"[^>]*>', escalas), "No public link to academic personal data"
         aula = source.split(aula_marker, 1)[1].split("</section>", 1)[0]
         assert 'aria-labelledby="aulapulse-title"' in aula and 'id="aulapulse-title"' in aula, filename

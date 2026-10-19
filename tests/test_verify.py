@@ -39,8 +39,13 @@ class PortfolioContractTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             verify.verify()
 
-    def test_escalas_missing_pending_admin_disclaimer_is_rejected(self):
-        self.edit("en.html", lambda s: s.replace("were still pending", "are ready for all users"))
+    def test_escalas_missing_admin_validation_disclaimer_is_rejected(self):
+        self.edit("en.html", lambda s: s.replace("have not yet been confirmed", "are fully validated"))
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
+    def test_escalas_incorrect_password_status_is_rejected(self):
+        self.edit("index.html", lambda s: s.replace("cadastrada", "não configurada"))
         with self.assertRaises(AssertionError):
             verify.verify()
 
