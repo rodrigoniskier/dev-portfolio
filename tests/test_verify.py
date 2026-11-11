@@ -17,7 +17,7 @@ class PortfolioContractTests(unittest.TestCase):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
         self.fixture = Path(self.directory.name)
-        for name in ("index.html", "en.html", "projects.json", "script.js"):
+        for name in ("index.html", "en.html", "projects.json", "script.js", "style.css", "robots.txt", "sitemap.xml"):
             shutil.copy2(REPOSITORY / name, self.fixture / name)
         shutil.copytree(REPOSITORY / "screens", self.fixture / "screens")
         self.original_root = verify.ROOT
@@ -109,6 +109,81 @@ class PortfolioContractTests(unittest.TestCase):
         path.write_bytes(path.read_bytes() + b"x" * 200_000)
         with self.assertRaises(AssertionError):
             verify.verify()
+
+
+    # --- GoRelay showcase and ATS readability -------------------------------------------
+
+    def reject(self):
+        with self.assertRaises(AssertionError):
+            verify.verify()
+
+    def test_missing_gorelay_spotlight_is_rejected(self):
+        self.edit("index.html", lambda s: re.sub(
+            r'<section class="repolens-spotlight gorelay-spotlight".*?</section>', "", s, flags=re.S
+        ))
+        self.reject()
+
+    def test_gorelay_non_repository_link_is_rejected(self):
+        self.edit("en.html", lambda s: s.replace(
+            '<h3 id="gorelay-title">', '<a href="https://example.invalid/demo">Demo</a><h3 id="gorelay-title">'
+        ))
+        self.reject()
+
+    def test_gorelay_without_production_disclaimer_is_rejected(self):
+        self.edit("en.html", lambda s: s.replace("not a production service", "ready for production"))
+        self.reject()
+
+    def test_gorelay_without_exactly_once_disclaimer_is_rejected(self):
+        self.edit("index.html", lambda s: s.replace("Não há alegação de exactly-once, capacidade ou SLA", "Entrega exatamente uma vez garantida"))
+        self.reject()
+
+    def test_gorelay_missing_screenshot_is_rejected(self):
+        (self.fixture / "screens/gorelay-dashboard.webp").unlink()
+        with self.assertRaises((AssertionError, FileNotFoundError)):
+            verify.verify()
+
+    def test_gorelay_must_lead_the_showcases(self):
+        def move_last(s):
+            block = re.search(r'<section class="repolens-spotlight gorelay-spotlight".*?</section>\s*', s, flags=re.S).group(0)
+            s = s.replace(block, "")
+            return s.replace('<article class="case" id="orcaflow">', block + '<article class="case" id="orcaflow">')
+        self.edit("index.html", move_last)
+        self.reject()
+
+    def test_word_gluing_line_break_is_rejected(self):
+        self.edit("index.html", lambda s: s.replace("Ideias que viram <br>", "Ideias que viram<br>"))
+        self.reject()
+
+    def test_missing_go_skill_keyword_is_rejected(self):
+        self.edit("en.html", lambda s: s.replace("Go (Golang), ", ""))
+        self.reject()
+
+    def test_decorative_arrow_in_contact_link_is_rejected(self):
+        self.edit("index.html", lambda s: s.replace(
+            '<li><a href="mailto:niskier.rodrigo@gmail.com">niskier.rodrigo@gmail.com</a></li>',
+            '<li><a href="mailto:niskier.rodrigo@gmail.com">niskier.rodrigo@gmail.com ↗</a></li>'
+        ))
+        self.reject()
+
+    def test_missing_social_metadata_is_rejected(self):
+        self.edit("en.html", lambda s: s.replace('<meta name="twitter:title"', '<meta name="x-removed"'))
+        self.reject()
+
+    def test_json_ld_without_software_project_is_rejected(self):
+        self.edit("index.html", lambda s: s.replace('"@type":"SoftwareSourceCode"', '"@type":"CreativeWork"'))
+        self.reject()
+
+    def test_sitemap_missing_english_page_is_rejected(self):
+        self.edit("sitemap.xml", lambda s: s.replace("<loc>https://rn-dev-portfolio-orcin.vercel.app/en.html</loc>", ""))
+        self.reject()
+
+    def test_robots_without_sitemap_is_rejected(self):
+        self.edit("robots.txt", lambda s: s.replace("Sitemap:", "# Sitemap:"))
+        self.reject()
+
+    def test_print_css_that_hides_spotlight_text_is_rejected(self):
+        self.edit("style.css", lambda s: s.replace(".repolens-spotlight{display:block;background:#fff!important;", ".repolens-spotlight-x{display:block;"))
+        self.reject()
 
 
 if __name__ == "__main__":

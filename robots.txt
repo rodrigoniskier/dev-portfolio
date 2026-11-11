@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rn-dev-portfolio-orcin.vercel.app/sitemap.xml

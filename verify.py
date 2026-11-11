@@ -7,6 +7,8 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parent
 EXPECTED_IDS = ("orcaflow", "examforge", "clinicaltrack", "serviceflow", "teammural")
+SPOTLIGHT_IMAGE = "gorelay-dashboard.webp"
+SITE = "https://rn-dev-portfolio-orcin.vercel.app/"
 
 
 class PortfolioPage(HTMLParser):
@@ -67,6 +69,46 @@ process.stdout.write(result);
     return json.loads(subprocess.check_output(["node", "-e", command], cwd=ROOT, text=True))
 
 
+def visible_text(source):
+    """Approximate what a resume parser sees: no scripts/styles, <br> dropped."""
+    source = re.sub(r"(?is)<(script|style)\b.*?</\1>", "", source)
+    return re.sub(r"<[^>]+>", "", source)
+
+
+def verify_ats(source, filename):
+    # A parser that drops <br> must not glue words together ("viramproduto").
+    assert not re.search(r"\S<br>", source), f"<br> glues words together in {filename}"
+    text = visible_text(source)
+    # The skill the lead project demonstrates must be literally present for keyword matching.
+    assert "Go (Golang)" in text, f"Go (Golang) skill keyword missing in {filename}"
+    # Contact data must not be followed by decorative glyphs inside the link text.
+    assert re.search(r">niskier\.rodrigo@gmail\.com</a>", source), f"Email link text must be plain in {filename}"
+    assert "↗</a>" not in source.split('id="perfil"', 1)[1].split("</section>", 1)[0], f"Decorative arrow in profile links in {filename}"
+    for meta in ('name="twitter:title"', 'name="twitter:description"', 'name="twitter:image"',
+                 'property="og:image:width"', 'property="og:image:height"', 'name="robots"'):
+        assert meta in source, f"Missing {meta} in {filename}"
+    blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', source, re.S)
+    graph = {json.loads(block)["@type"]: json.loads(block) for block in blocks}
+    assert {"Person", "SoftwareSourceCode"} <= set(graph), f"JSON-LD Person and SoftwareSourceCode required in {filename}"
+    assert "Go" in graph["Person"]["knowsAbout"], filename
+    assert graph["SoftwareSourceCode"]["codeRepository"] == "https://github.com/rodrigoniskier/gorelay", filename
+    assert graph["SoftwareSourceCode"]["programmingLanguage"] == "Go", filename
+
+
+def verify_site_files():
+    robots = (ROOT / "robots.txt").read_text(encoding="utf-8")
+    lines = [line.strip() for line in robots.splitlines()]
+    assert "Allow: /" in lines and f"Sitemap: {SITE}sitemap.xml" in lines, "robots.txt must allow crawling and name the sitemap"
+    sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    for url in (SITE, SITE + "en.html"):
+        assert f"<loc>{url}</loc>" in sitemap, f"sitemap.xml missing {url}"
+    for hreflang in ('hreflang="pt-BR"', 'hreflang="en"', 'hreflang="x-default"'):
+        assert sitemap.count(hreflang) == 2, f"sitemap.xml needs {hreflang} on both pages"
+    print_css = (ROOT / "style.css").read_text(encoding="utf-8").rsplit("@media print", 1)[-1]
+    assert re.search(r"\.repolens-spotlight\{[^}]*background:#fff!important", print_css), \
+        "Print CSS must render the dark spotlights as black on white"
+
+
 def verify():
     projects = json.loads((ROOT / "projects.json").read_text(encoding="utf-8"))
     gallery = gallery_registry()
@@ -88,7 +130,10 @@ def verify():
             assert len(data) < 200_000, f"Screenshot exceeds 200 KB: {name}"
             images.add(name)
     assert len(images) == 12, "Twelve referenced screenshots required"
-    assert images == {p.name for p in (ROOT / "screens").glob("*.webp")}, "Unreferenced/missing screenshot"
+    # GoRelay's dashboard capture belongs to its spotlight, not to the gallery.
+    shot = (ROOT / "screens" / SPOTLIGHT_IMAGE).read_bytes()
+    assert shot[:4] == b"RIFF" and shot[8:12] == b"WEBP" and len(shot) < 200_000, SPOTLIGHT_IMAGE
+    assert images | {SPOTLIGHT_IMAGE} == {p.name for p in (ROOT / "screens").glob("*.webp")}, "Unreferenced/missing screenshot"
     assert projects[0]["repo"] is None, "OrçaFlow has no public code repository link"
     for filename, language, cta in (("index.html", "pt", "Explorar demonstração"), ("en.html", "en", "Explore demo")):
         source = (ROOT / filename).read_text(encoding="utf-8")
@@ -104,6 +149,30 @@ def verify():
             assert image["src"] == "screens/" + project["screen"], project["id"]
             assert image.get("alt") and int(image["width"]) > 0 and int(image["height"]) > 0, project["id"]
             assert image.get("loading") == "lazy", project["id"]
+        # GoRelay is the lead backend/systems showcase: text-first, honest about its limits.
+        gorelay_marker = '<section class="repolens-spotlight gorelay-spotlight" id="gorelay"'
+        assert source.count(gorelay_marker) == 1, f"Missing/duplicate GoRelay showcase in {filename}"
+        assert "gorelay" in page.ids, filename
+        other_spotlights = [source.find(f'<section class="repolens-spotlight {name}') for name in ("escalas-spotlight", "aulapulse-spotlight")]
+        other_spotlights.append(source.find('<section class="repolens-spotlight" id="repolens"'))
+        assert all(position >= 0 for position in other_spotlights), f"Other showcases missing in {filename}"
+        assert source.index(gorelay_marker) < min(other_spotlights), f"GoRelay must lead the showcases in {filename}"
+        gorelay = source.split(gorelay_marker, 1)[1].split("</section>", 1)[0]
+        assert 'aria-labelledby="gorelay-title"' in gorelay and 'id="gorelay-title"' in gorelay, filename
+        for evidence in ("Go", "PostgreSQL", "Idempotency-Key", "FOR UPDATE SKIP LOCKED", "92", "at-least-once", "govulncheck",
+                         "não é um serviço de produção" if language == "pt" else "not a production service"):
+            assert evidence in gorelay, f"GoRelay evidence missing in {filename}: {evidence}"
+        gorelay_links = re.findall(r'<a\s[^>]*href="([^"]+)"[^>]*>', gorelay)
+        assert len(gorelay_links) == 3, f"Expected three GoRelay evidence links in {filename}"
+        for link in gorelay_links:
+            assert link.startswith("https://github.com/rodrigoniskier/gorelay"), link
+        gorelay_images = re.findall(r"<img\s[^>]*>", gorelay)
+        assert len(gorelay_images) == 1, filename
+        assert f'src="screens/{SPOTLIGHT_IMAGE}"' in gorelay_images[0] and 'alt="' in gorelay_images[0], filename
+        assert 'loading="lazy"' in gorelay_images[0] and 'width="' in gorelay_images[0] and 'height="' in gorelay_images[0], filename
+        assert "exactly-once" in gorelay and ("Não há alegação" if language == "pt" else "no exactly-once") in gorelay.replace("There is no", "there is no"), \
+            f"GoRelay must disclaim exactly-once delivery in {filename}"
+        verify_ats(source, filename)
         # AulaPulse is a live, separate spotlight; the GitHub source repo is private.
         assert "aulapulse" in page.ids, f"Missing AulaPulse showcase in {filename}"
         aula_marker = '<section class="repolens-spotlight aulapulse-spotlight" id="aulapulse"'
@@ -173,7 +242,8 @@ def verify():
         assert "<iframe" not in source and "em preparação" not in source, filename
         assert 'mailto:niskier.rodrigo@gmail.com' in source, filename
         assert 'og:image' in source and 'rel="canonical"' in source, filename
-    print("Five bilingual gallery cases plus Escalas, AulaPulse AI and RepoLens AI spotlights, twelve WebP screenshots, metadata, contact and links verified.")
+    verify_site_files()
+    print("Five bilingual gallery cases plus GoRelay, Escalas, AulaPulse AI and RepoLens AI spotlights, twelve gallery WebP screenshots plus the GoRelay capture, ATS checks, site files, metadata, contact and links verified.")
 
 
 if __name__ == "__main__":
