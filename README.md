@@ -9,6 +9,27 @@ Public bilingual portfolio for software development, applied AI, automation, EdT
 
 The portfolio uses semantic HTML, standard headings, plain-text technical skills, education and professional background, static Portuguese and English pages, language-specific metadata, `hreflang`, JSON-LD Person markup and print-friendly CSS. Critical professional information is not stored only in images or generated dynamically by JavaScript.
 
+## GoRelay — lead backend/systems showcase (Go + PostgreSQL, 2026)
+
+The bilingual homepages open their showcases with **GoRelay**, a text-first spotlight placed before Escalas de Estágio, AulaPulse AI and RepoLens AI, because it is the project that best demonstrates backend and systems skills (Go, PostgreSQL, concurrency, idempotency, retries, CI). One dashboard capture, `screens/gorelay-dashboard.webp` (synthetic data, 1363×975, under the 200 KB budget), accompanies it; it is a spotlight asset, not a gallery image.
+
+- **Evidence:** the public [repository](https://github.com/rodrigoniskier/gorelay), its [architecture decision records](https://github.com/rodrigoniskier/gorelay/tree/main/docs/adr) and its [benchmark results with methodology](https://github.com/rodrigoniskier/gorelay/blob/main/docs/benchmarks/RESULTS.md). The page links nowhere else.
+- **Numbers:** 92 Go test functions (`func Test…` in `cmd/gorelay`), four simulated recipient scenarios (200, 429, 503, timeout) and five versioned SQL migrations. These can be recounted from the repository.
+- **Limits stated on the page:** a local loopback lab, no authentication, no public deployment, not a production service; at-least-once delivery with possible duplicates; no exactly-once, capacity or SLA claim. There is no hosted demo and none is implied.
+
+## ATS and recruiter-readability audit (Nov 2026)
+
+Checked by extracting each page's text the way a resume parser does (no CSS or JavaScript) and by rendering a PDF with background graphics off, which is Chrome's print default.
+
+- **Words glued by line breaks:** `Ideias que viram<br>produto.` extracted as "viramproduto". Line breaks inside headings and the hero now keep a space before `<br>`; `verify.py` rejects any `\S<br>`.
+- **Missing keyword:** "Go" appeared nowhere. It is now in the hero role line, the skills list (`Go (Golang)`), the experience entry, the keywords meta, JSON-LD `knowsAbout` and `jobTitle`, and the title tag.
+- **Print / save-as-PDF defect:** the dark spotlights used white text, so on unprinted backgrounds their headings vanished and the rest turned pale grey. The print stylesheet now renders them black on white.
+- **Labels written for machines:** the visible "TEXTO ATS" / "ATS-READABLE" eyebrow and the "/ ATS" hero link were reworded to plain professional labels. Readability for parsers is unchanged.
+- **Contact data:** decorative `↗` glyphs after the email and profile links moved into CSS so extracted text is clean.
+- **Metadata and discovery:** added `twitter:title`, `twitter:description`, `twitter:image`, `og:image` type and dimensions (now the GoRelay capture), a `robots` meta, `robots.txt`, and `sitemap.xml` with `hreflang` alternates. A second JSON-LD block describes GoRelay as `SoftwareSourceCode`.
+
+Not changed, and deliberately not invented: employer names, employment dates, institutions and city/phone are absent from the experience and education text. Resume parsers look for them; add them only with the owner's confirmed facts.
+
 ## Escalas de Estágio – Medicina — Google Workspace workflow (2026)
 
 A new Portuguese/English text-first showcase precedes AulaPulse AI and RepoLens AI. This is a real medical internship scheduling workflow developed with **Google Sheets, Google Drive and Google Apps Script**, backed by a private spreadsheet and published as a web app.
