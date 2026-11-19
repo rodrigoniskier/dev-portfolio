@@ -5,6 +5,18 @@ Public bilingual portfolio for software development, applied AI, automation, EdT
 - Portuguese: https://rn-dev-portfolio-orcin.vercel.app/
 - English: https://rn-dev-portfolio-orcin.vercel.app/en.html
 
+## Problem, audience and outcome
+
+**Problem.** Recruiters and engineering managers need to assess a candidate quickly, and applicant tracking systems read plain text far better than screenshots.
+
+**Who it is for.** Recruiters, hiring managers and engineers evaluating software, applied AI and automation work.
+
+**What it delivers.** Two static pages (Portuguese and English) that open with the strongest projects, link to code, demos and architecture evidence, and keep critical information as plain text.
+
+**Technologies.** HTML, CSS, JSON-LD (schema.org Person), static hosting on Vercel.
+
+**Quality and evidence.** Semantic headings, `hreflang`, language-specific metadata and print-friendly CSS, as described in the next section.
+
 ## ATS / recruiter-friendly structure
 
 The portfolio uses semantic HTML, standard headings, plain-text technical skills, education and professional background, static Portuguese and English pages, language-specific metadata, `hreflang`, JSON-LD Person markup and print-friendly CSS. Critical professional information is not stored only in images or generated dynamically by JavaScript.
