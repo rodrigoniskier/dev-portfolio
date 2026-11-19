@@ -15,7 +15,7 @@ Public bilingual portfolio for software development, applied AI, automation, EdT
 
 **Technologies.** HTML, CSS, JSON-LD (schema.org Person), static hosting on Vercel.
 
-**Quality and evidence.** Semantic headings, `hreflang`, language-specific metadata and print-friendly CSS, as described in the next section.
+**Quality and evidence.** Semantic headings, `hreflang`, language-specific metadata and print-friendly CSS, as described in the next section. MIT license.
 
 ## ATS / recruiter-friendly structure
 
